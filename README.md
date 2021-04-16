@@ -4,7 +4,7 @@ TeamCity server &amp; agent containers for painless setup with Docker for Php De
 ### Basic Setup
 ```bash
 export SERVER_URL=http://<TEAMCITY_SERVER_URL>:8111
-docker build -t teamcity-android-php .
+docker build -t teamcity-agent-php .
 docker-compose up teamcity-server teamcity-agent
 ```
 
