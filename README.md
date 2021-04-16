@@ -27,5 +27,5 @@ export LOGS_PATH=<TEAMCITY_LOGS_DIR>
 export CONF_PATH=<AGENT_CONF_DIR>
 
 # build provided image & start docker containers
-docker build -t teamcity-android-php .
+docker build -t teamcity-agent-php .
 docker-compose up teamcity-server teamcity-agent
