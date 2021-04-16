@@ -3,17 +3,24 @@ version: "3.8"
 services:
   teamcity-server:
     image: jetbrains/teamcity-server
+    container_name: teamcity-server
     deploy:
         resources:
             limits:
                 memory: 2G
+    user: root            
     ports:
       - "8111:${PORT:-8111}"
     volumes:
       - ${DATA_PATH:-~/workspace/teamcity/data/}:/data/teamcity_server/datadir
       - ${LOGS_PATH:-~/workspace/teamcity/logs/}:/opt/teamcity/logs
+    networks:
+       network:
+          aliases:
+            - teamcity-server-instance
   teamcity-agent:
     image: teamcity-agent-php
+    container_name: teamcity_agent
     deploy:
         resources:
             limits:
@@ -22,3 +29,13 @@ services:
       - ${CONF_PATH:-~/workspace/teamcity/agent/}:/data/teamcity_agent/conf
     environment:
       - SERVER_URL=${SERVER_URL}
+    networks:
+       network:
+         aliases:
+           - teamcity-agent-instance
+networks:
+  network:
+    name: network_main
+    driver: bridge
+    ipam: 
+      driver: default
