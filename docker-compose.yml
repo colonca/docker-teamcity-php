@@ -1,0 +1,24 @@
+
+version: "3.8"
+services:
+  teamcity-server:
+    image: jetbrains/teamcity-server
+    deploy:
+        resources:
+            limits:
+                memory: 2G
+    ports:
+      - "8111:${PORT:-8111}"
+    volumes:
+      - ${DATA_PATH:-~/workspace/teamcity/data/}:/data/teamcity_server/datadir
+      - ${LOGS_PATH:-~/workspace/teamcity/logs/}:/opt/teamcity/logs
+  teamcity-agent:
+    image: teamcity-agent-php
+    deploy:
+        resources:
+            limits:
+                memory: 6G
+    volumes:
+      - ${CONF_PATH:-~/workspace/teamcity/agent/}:/data/teamcity_agent/conf
+    environment:
+      - SERVER_URL=${SERVER_URL}
