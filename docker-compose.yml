@@ -13,10 +13,6 @@ services:
     volumes:
       - ${DATA_PATH:-~/workspace/teamcity/data/}:/data/teamcity_server/datadir
       - ${LOGS_PATH:-~/workspace/teamcity/logs/}:/opt/teamcity/logs
-    networks:
-       network:
-          aliases:
-            - teamcity-server-instance
   teamcity-agent:
     image: teamcity-agent-php
     container_name: teamcity_agent
@@ -27,14 +23,4 @@ services:
     volumes:
       - ${CONF_PATH:-~/workspace/teamcity/agent/}:/data/teamcity_agent/conf
     environment:
-      - SERVER_URL=${SERVER_URL:-http://teamcity-server-instance:8111}
-    networks:
-       network:
-         aliases:
-           - teamcity-agent-instance
-networks:
-  network:
-    name: network_main
-    driver: bridge
-    ipam: 
-      driver: default
+      - SERVER_URL=http://teamcity-server:8111}
